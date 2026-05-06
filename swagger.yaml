@@ -1,0 +1,283 @@
+openapi: 3.0.3
+info:
+  title: API de Reservas de Restaurante
+  description: >-
+    Sistema de reservas de restaurante construido con NestJS siguiendo un
+    enfoque API First. Este documento es el contrato de la API; la
+    implementación con decoradores @nestjs/swagger lo refleja y se sirve en
+    tiempo de ejecución en /api/docs.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor local de desarrollo
+tags:
+  - name: reservations
+    description: Gestión de reservas
+  - name: tables
+    description: Consulta de mesas y disponibilidad
+  - name: health
+    description: Estado del sistema
+
+paths:
+  /health:
+    get:
+      tags: [health]
+      summary: Verificar el estado del sistema
+      responses:
+        '200':
+          description: El sistema está operativo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /tables:
+    get:
+      tags: [tables]
+      summary: Listar todas las mesas del restaurante
+      responses:
+        '200':
+          description: Listado de mesas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Table'
+
+  /tables/available:
+    get:
+      tags: [tables]
+      summary: Consultar mesas disponibles por fecha y franja horaria
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema: { type: string, example: '2026-06-20' }
+        - name: time
+          in: query
+          required: true
+          schema: { type: string, example: '19:30' }
+      responses:
+        '200':
+          description: Mesas libres para la fecha y franja indicadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Table'
+        '400':
+          description: La franja horaria no es válida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /reservations:
+    post:
+      tags: [reservations]
+      summary: Crear una nueva reserva
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservation'
+      responses:
+        '201':
+          description: Reserva creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '400':
+          description: Datos de entrada inválidos o violación de una regla de negocio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: La mesa ya está reservada en esa fecha y franja (doble reserva)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags: [reservations]
+      summary: Listar reservas (filtros opcionales por fecha y estado)
+      parameters:
+        - name: date
+          in: query
+          required: false
+          schema: { type: string, example: '2026-06-20' }
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ReservationStatus'
+      responses:
+        '200':
+          description: Listado de reservas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+
+  /reservations/{id}:
+    get:
+      tags: [reservations]
+      summary: Obtener una reserva por id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: La reserva solicitada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '404':
+          description: La reserva no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags: [reservations]
+      summary: Actualizar una reserva (reprogramar, comensales o estado)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReservation'
+      responses:
+        '200':
+          description: Reserva actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '404':
+          description: La reserva no existe
+        '400':
+          description: Violación de una regla de negocio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: La mesa ya está reservada en esa fecha y franja (doble reserva)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags: [reservations]
+      summary: Cancelar una reserva
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Reserva cancelada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '404':
+          description: La reserva no existe
+
+components:
+  schemas:
+    ReservationStatus:
+      type: string
+      enum: [PENDING, CONFIRMED, SEATED, COMPLETED, CANCELLED]
+
+    TableLocation:
+      type: string
+      enum: [INDOOR, OUTDOOR, TERRACE, PRIVATE]
+
+    HealthResponse:
+      type: object
+      properties:
+        status: { type: string, example: ok }
+        uptime: { type: integer, example: 1234 }
+        timestamp: { type: string, example: '2026-06-06T15:00:00.000Z' }
+
+    Table:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        label: { type: string, example: A1 }
+        capacity: { type: integer, example: 4 }
+        location:
+          $ref: '#/components/schemas/TableLocation'
+
+    CreateReservation:
+      type: object
+      required: [customerName, customerEmail, customerPhone, date, time, partySize]
+      properties:
+        customerName: { type: string, minLength: 2, maxLength: 80, example: Juan Pérez }
+        customerEmail: { type: string, format: email, example: juan.perez@example.com }
+        customerPhone: { type: string, example: '+57 3001234567' }
+        date: { type: string, example: '2026-06-20' }
+        time: { type: string, example: '19:30' }
+        partySize: { type: integer, minimum: 1, maximum: 20, example: 4 }
+        tableId: { type: integer, nullable: true, example: 3 }
+
+    UpdateReservation:
+      type: object
+      properties:
+        customerName: { type: string }
+        customerEmail: { type: string, format: email }
+        customerPhone: { type: string }
+        date: { type: string }
+        time: { type: string }
+        partySize: { type: integer, minimum: 1, maximum: 20 }
+        tableId: { type: integer }
+        status:
+          $ref: '#/components/schemas/ReservationStatus'
+
+    Reservation:
+      type: object
+      properties:
+        id: { type: string, example: a3f1c2e4-5b6d-7e8f-9a0b-1c2d3e4f5a6b }
+        customerName: { type: string }
+        customerEmail: { type: string }
+        customerPhone: { type: string }
+        date: { type: string, example: '2026-06-20' }
+        time: { type: string, example: '19:30' }
+        partySize: { type: integer, example: 4 }
+        tableId: { type: integer, nullable: true, example: 3 }
+        status:
+          $ref: '#/components/schemas/ReservationStatus'
+        createdAt: { type: string, example: '2026-06-06T15:00:00.000Z' }
+        updatedAt: { type: string, example: '2026-06-06T15:00:00.000Z' }
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode: { type: integer, example: 409 }
+        message:
+          oneOf:
+            - { type: string }
+            - { type: array, items: { type: string } }
+          example: La mesa A1 ya está reservada el 2026-06-20 a las 19:30
+        error: { type: string, example: BusinessException }
+        errorCode: { type: string, example: DOUBLE_BOOKING }
+        timestamp: { type: string, example: '2026-06-06T15:00:00.000Z' }
+        path: { type: string, example: /reservations }
