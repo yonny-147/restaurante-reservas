@@ -9,6 +9,8 @@ import {
 import { Request, Response } from 'express';
 import { BusinessException } from '../exceptions/business.exception';
 
+// Updated: returns consistent { statusCode, message,
+// error, errorCode, timestamp, path } structure
 /**
  * Forma estándar de toda respuesta de error de la API.
  */
