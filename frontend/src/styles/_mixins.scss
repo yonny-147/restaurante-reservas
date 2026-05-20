@@ -1,0 +1,51 @@
+@use 'variables' as *;
+
+// Media query para tablet (<= 768px)
+@mixin tablet {
+  @media (max-width: #{$breakpoint-tablet}) {
+    @content;
+  }
+}
+
+// Media query para escritorio (>= 1024px)
+@mixin desktop {
+  @media (min-width: #{$breakpoint-desktop}) {
+    @content;
+  }
+}
+
+// Tarjeta base
+@mixin card {
+  background: $color-surface;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-card;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Contenedor centrado con ancho máximo
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include tablet {
+    padding: 0 $spacing-sm;
+  }
+}
+
+// Transición suave estándar
+@mixin transition($props...) {
+  transition: $props 0.2s ease;
+}

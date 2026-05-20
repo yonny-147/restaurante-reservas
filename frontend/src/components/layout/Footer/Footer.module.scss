@@ -1,0 +1,36 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.footer {
+  margin-top: $spacing-xl;
+  background: $color-primary;
+  color: rgba(#fff, 0.85);
+  padding: $spacing-lg 0;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  text-align: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+
+  svg {
+    color: $color-accent;
+  }
+}
+
+.copy {
+  font-size: 0.8rem;
+  color: rgba(#fff, 0.6);
+}

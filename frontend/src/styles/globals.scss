@@ -1,0 +1,15 @@
+@use 'reset';
+@use 'variables' as *;
+
+body {
+  font-family: $font-family;
+  color: $color-text;
+  background: $color-background;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+#__next,
+main {
+  min-height: 100vh;
+}
