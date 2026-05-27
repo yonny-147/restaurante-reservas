@@ -1,0 +1,36 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.inline {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-lg;
+}
+
+.fullPage {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  min-height: 50vh;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid rgba($color-primary, 0.15);
+  border-top-color: $color-accent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.label {
+  color: $color-text-muted;
+  font-size: 0.9rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
