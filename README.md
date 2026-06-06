@@ -35,6 +35,10 @@ código, la testabilidad y la documentación.
 | **Swagger / OpenAPI 3.0** | Documentación y contrato de la API |
 | **class-validator / class-transformer** | Validación y transformación de DTOs |
 | **Jest 29 + Supertest 7** | Pruebas unitarias, de controlador y e2e |
+| **Next.js 14** | Framework frontend (App Router) |
+| **SCSS Modules** | Sistema de diseño y estilos |
+| **React Hook Form + Zod** | Validación de formularios |
+| **Axios** | Cliente HTTP tipado |
 | **Git / GitHub** | Control de versiones y colaboración |
 
 ## Instalación rápida
@@ -56,6 +60,17 @@ npm run start:dev
 
 La API queda disponible en **http://localhost:3000** y la documentación interactiva en
 **http://localhost:3000/api/docs**.
+
+## Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend disponible en **http://localhost:4000**
+Requiere el backend corriendo en http://localhost:3000
 
 ## Endpoints disponibles
 
@@ -94,6 +109,8 @@ La documentación completa del proyecto se encuentra en la carpeta [`docs/`](./d
 - 🏗️ [Documentación Técnica / Stack](./docs/tech-stack.md) — arquitectura, tecnologías y decisiones de diseño.
 - 🔧 [Gestión Post-Proyecto](./docs/gestion-post-proyecto.md) — soporte, mantenimiento y versionado.
 - 📑 [Contrato OpenAPI](./swagger.yaml) — especificación API First.
+- 📊 [Resultados de Pruebas](./docs/test-results.md) — verificación final de 33 tests.
+- 📝 [CHANGELOG](./CHANGELOG.md) — historial de versiones.
 
 ## Pruebas
 
@@ -105,6 +122,15 @@ npm run test:e2e    # Pruebas extremo a extremo
 
 Resultado actual: **33 pruebas aprobadas (100 %)**; cobertura del **94.05 %** de
 sentencias en el servicio de dominio.
+
+## Frontend — Páginas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Home: hero, características, cómo funciona |
+| `/reservations/new` | Formulario de nueva reserva con disponibilidad en vivo |
+| `/reservations` | Lista con filtros por fecha y estado, acciones confirmar/cancelar |
+| `/reservations/[id]` | Detalle con timeline de estados y modal de cancelación |
 
 ## Estructura del proyecto
 
@@ -121,6 +147,13 @@ restaurante-reservas/
 ├── test/
 │   └── app.e2e-spec.ts          # Pruebas e2e
 ├── docs/                        # Documentación académica
+├── frontend/
+│   ├── src/
+│   │   ├── app/          # Pages: Home, Nueva Reserva, Lista, Detalle
+│   │   ├── components/   # Button, Badge, Modal, LoadingSpinner, Header, Footer
+│   │   ├── lib/api/      # Cliente Axios tipado
+│   │   └── styles/       # _variables.scss, _mixins.scss, globals.scss
+│   └── .env.local        # NEXT_PUBLIC_API_URL
 ├── swagger.yaml                 # Contrato OpenAPI (API First)
 ├── .env.example                 # Plantilla de variables de entorno
 └── README.md
@@ -131,6 +164,7 @@ restaurante-reservas/
 | Rol | Integrante |
 |-----|------------|
 | Desarrollo backend y documentación | Yonny Alexander Ospina Ospina |
+| Desarrollo frontend | Yonny Alexander Ospina Ospina |
 
 > Proyecto académico — curso de Ingeniería de Software, 2026.
 
