@@ -1,0 +1,39 @@
+// === Paleta de colores ===
+$color-primary: #1a1a2e;
+$color-accent: #e94560;
+$color-success: #2ecc71;
+$color-warning: #f39c12;
+$color-info: #3498db;
+$color-danger: #e74c3c;
+$color-background: #f8f9fa;
+$color-surface: #ffffff;
+$color-text: #2d3436;
+$color-text-muted: #636e72;
+$color-border: #e1e4e8;
+
+// === Radios de borde ===
+$border-radius-sm: 8px;
+$border-radius-md: 16px;
+$border-radius-lg: 24px;
+
+// === Sombras ===
+$shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+$shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+// === Tipografía ===
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// === Breakpoints ===
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// === Espaciado ===
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2.5rem;
+$spacing-xl: 4rem;
+
+// === Layout ===
+$container-max: 1200px;
+$header-height: 72px;

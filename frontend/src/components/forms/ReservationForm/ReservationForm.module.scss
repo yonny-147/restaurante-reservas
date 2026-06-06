@@ -1,0 +1,76 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: $color-text;
+
+    svg {
+      color: $color-accent;
+    }
+  }
+
+  input,
+  select {
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid $color-border;
+    border-radius: $border-radius-sm;
+    background: $color-surface;
+    color: $color-text;
+    @include transition(border-color, box-shadow);
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+      box-shadow: 0 0 0 3px rgba($color-accent, 0.15);
+    }
+  }
+}
+
+.fullSpan {
+  grid-column: 1 / -1;
+}
+
+.error {
+  color: $color-danger;
+  font-size: 0.8rem;
+}
+
+.hint {
+  color: $color-text-muted;
+  font-size: 0.8rem;
+}
+
+.submitError {
+  background: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border: 1px solid rgba($color-danger, 0.3);
+  border-radius: $border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}

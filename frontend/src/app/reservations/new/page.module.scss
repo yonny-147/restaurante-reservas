@@ -1,0 +1,46 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.page {
+  @include container;
+  max-width: 760px;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: $spacing-md;
+  @include transition(color);
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.header {
+  margin-bottom: $spacing-md;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    color: $color-text-muted;
+    margin-top: 0.25rem;
+  }
+}
+
+.card {
+  @include card;
+  padding: $spacing-lg;
+
+  @include tablet {
+    padding: $spacing-md;
+  }
+}

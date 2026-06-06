@@ -1,0 +1,169 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  background: linear-gradient(135deg, $color-primary 0%, #16213e 60%, #0f3460 100%);
+  color: #fff;
+  padding: $spacing-xl 0;
+}
+
+.heroInner {
+  @include container;
+  max-width: 760px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+
+    @include tablet {
+      font-size: 2.4rem;
+    }
+  }
+
+  p {
+    font-size: 1.15rem;
+    color: rgba(#fff, 0.85);
+    max-width: 560px;
+  }
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba($color-accent, 0.2);
+  color: #fff;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  svg {
+    color: $color-accent;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-xs;
+
+  @include tablet {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.section {
+  @include container;
+  padding-top: $spacing-xl;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: $spacing-lg;
+
+    @include tablet {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include card;
+  padding: $spacing-lg;
+  text-align: center;
+  @include transition(transform, box-shadow);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-hover;
+  }
+
+  h3 {
+    margin: $spacing-sm 0 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 0.95rem;
+  }
+}
+
+.cardIcon {
+  @include flex-center;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: $border-radius-md;
+  background: rgba($color-accent, 0.12);
+  color: $color-accent;
+}
+
+.steps {
+  padding-bottom: $spacing-lg;
+}
+
+.step {
+  @include card;
+  position: relative;
+  padding: $spacing-lg;
+  text-align: center;
+
+  h3 {
+    margin: $spacing-sm 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 0.95rem;
+  }
+}
+
+.stepNumber {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $color-primary;
+  color: #fff;
+  font-weight: 700;
+}
+
+.stepIcon {
+  @include flex-center;
+  width: 56px;
+  height: 56px;
+  margin: $spacing-xs auto 0;
+  border-radius: $border-radius-md;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary;
+}

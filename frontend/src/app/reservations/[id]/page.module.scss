@@ -1,0 +1,183 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.page {
+  @include container;
+  max-width: 760px;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: $spacing-md;
+  @include transition(color);
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.headerRow {
+  @include flex-between;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+
+  h1 {
+    font-size: 1.8rem;
+
+    @include tablet {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.card {
+  @include card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-md;
+  }
+
+  @include tablet {
+    padding: $spacing-md;
+  }
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $color-text-muted;
+    margin-bottom: 0.2rem;
+
+    svg {
+      color: $color-accent;
+    }
+  }
+
+  dd {
+    font-size: 1rem;
+    color: $color-text;
+  }
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  counter-reset: step;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: $color-border;
+    z-index: 0;
+  }
+}
+
+.tlStep {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  text-align: center;
+}
+
+.tlDot {
+  @include flex-center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  color: $color-text-muted;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.tlLabel {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+}
+
+.done {
+  .tlDot {
+    background: $color-success;
+    border-color: $color-success;
+    color: #fff;
+  }
+  .tlLabel {
+    color: $color-text;
+  }
+}
+
+.active {
+  .tlDot {
+    background: $color-accent;
+    border-color: $color-accent;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba($color-accent, 0.18);
+  }
+  .tlLabel {
+    color: $color-accent;
+    font-weight: 600;
+  }
+}
+
+.cancelledBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-xs;
+  flex-wrap: wrap;
+
+  @include tablet {
+    flex-direction: column;
+  }
+}
+
+.errorBanner {
+  background: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border: 1px solid rgba($color-danger, 0.3);
+  border-radius: $border-radius-sm;
+  padding: 0.75rem 1rem;
+  margin-bottom: $spacing-md;
+  font-size: 0.9rem;
+}

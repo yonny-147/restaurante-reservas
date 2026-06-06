@@ -1,0 +1,151 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.page {
+  @include container;
+  max-width: 960px;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+  gap: $spacing-sm;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    color: $color-text-muted;
+    margin-top: 0.25rem;
+  }
+
+  @include tablet {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.filters {
+  @include card;
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.filterField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $color-text-muted;
+  }
+
+  input,
+  select {
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid $color-border;
+    border-radius: $border-radius-sm;
+    background: $color-surface;
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+    }
+  }
+}
+
+.errorBanner {
+  background: rgba($color-danger, 0.1);
+  color: $color-danger;
+  border: 1px solid rgba($color-danger, 0.3);
+  border-radius: $border-radius-sm;
+  padding: 0.75rem 1rem;
+  margin-bottom: $spacing-md;
+  font-size: 0.9rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.row {
+  @include card;
+  @include flex-between;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  @include transition(box-shadow);
+
+  &:hover {
+    box-shadow: $shadow-hover;
+  }
+
+  @include tablet {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nameLine {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  strong {
+    font-size: 1.05rem;
+  }
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  color: $color-text-muted;
+  font-size: 0.88rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.empty {
+  @include card;
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  text-align: center;
+  padding: $spacing-xl $spacing-md;
+  color: $color-text-muted;
+
+  svg {
+    color: rgba($color-primary, 0.35);
+  }
+
+  h3 {
+    color: $color-text;
+    font-size: 1.3rem;
+  }
+}

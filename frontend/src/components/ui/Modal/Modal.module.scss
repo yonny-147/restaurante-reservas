@@ -1,0 +1,70 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  padding: $spacing-sm;
+  z-index: 1000;
+  animation: fade 0.15s ease;
+}
+
+.modal {
+  background: $color-surface;
+  border-radius: $border-radius-md;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: $shadow-hover;
+  animation: pop 0.18s ease;
+  overflow: hidden;
+}
+
+.header {
+  @include flex-between;
+  padding: $spacing-md;
+  border-bottom: 1px solid $color-border;
+
+  h3 {
+    font-size: 1.1rem;
+  }
+}
+
+.close {
+  @include flex-center;
+  color: $color-text-muted;
+  border-radius: $border-radius-sm;
+  padding: 0.25rem;
+  @include transition(background, color);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: $color-text;
+  }
+}
+
+.body {
+  padding: $spacing-md;
+  color: $color-text;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-xs;
+  padding: $spacing-md;
+  border-top: 1px solid $color-border;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
