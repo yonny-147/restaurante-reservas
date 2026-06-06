@@ -36,6 +36,9 @@ Versionado según [SemVer](https://semver.org/lang/es/).
   `esModuleInterop: true` en `tsconfig.json`.
 - **DEF-02:** errores de dominio devolvían HTTP 500; resuelto con 
   `BusinessException` y filtro global que mapea a 400/409 con `errorCode`.
+- **DEF-03:** `nest build` del backend compilaba los archivos `.tsx` del 
+  `frontend/` (280 errores); resuelto excluyendo `frontend` (y `coverage`) en 
+  `tsconfig.build.json` y `tsconfig.json`.
 
 ---
 
